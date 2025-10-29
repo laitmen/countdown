@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Countdown 2 Novembre - Santa Cristina Valgardena</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/weather-backgrounds.css">
 </head>
 <body>
     <div id="dynamic-background"></div>
+    <div id="particles-js"></div>
     
     <div class="container">
-        <h1>Countdown al 2 Novembre</h1>
-        <div class="target-date" id="targetDate">
-            <!-- Meteo verrà inserito qui -->
+        <div class="weather-info" id="weatherInfo">
+            <div class="weather-loading">Caricamento meteo...</div>
         </div>
+        
+        <h1>Countdown al 2 Novembre</h1>
+        <div class="target-date">2 Novembre 2025, 22:00 - Santa Cristina Valgardena</div>
         
         <div class="countdown">
             <div class="countdown-item">
@@ -39,6 +43,9 @@
         </div>
     </div>
 
+    <!-- Particle.js library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="js/particles.js"></script>
     <script src="js/weather-simulator.js"></script>
     <script src="js/script.js"></script>
 </body>
