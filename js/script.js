@@ -1,5 +1,5 @@
-// Data di destinazione: 2 Novembre 2025 alle 22:00
-const targetDate = new Date(2025, 10, 2, 22, 0, 0);
+// Data di destinazione: 2 Novembre 2025 alle 14:30
+const targetDate = new Date(2025, 10, 2, 14, 30, 0);
 
 function updateCountdown() {
     const now = new Date();
