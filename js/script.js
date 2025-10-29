@@ -21,7 +21,6 @@ function updateCountdown() {
         document.getElementById('minutes').textContent = '00';
         document.getElementById('seconds').textContent = '00';
         document.getElementById('message').style.display = 'block';
-        document.getElementById('progressBar').style.width = '100%';
         return;
     }
     
@@ -36,14 +35,6 @@ function updateCountdown() {
     document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
     document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
     document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-    
-    // Calcolo della percentuale di completamento
-    const startDate = new Date(targetDate.getFullYear(), 0, 1); // 1 Gennaio dello stesso anno
-    const totalTime = targetDate - startDate;
-    const elapsedTime = now - startDate;
-    const progressPercentage = Math.min((elapsedTime / totalTime) * 100, 100);
-    
-    document.getElementById('progressBar').style.width = progressPercentage + '%';
 }
 
 // Aggiornamento iniziale
