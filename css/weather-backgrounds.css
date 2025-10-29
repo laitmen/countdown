@@ -1,17 +1,10 @@
-/* Gradienti animati per condizioni simulate */
+/* Gradienti animati per diverse condizioni meteo e ore del giorno */
 
 /* MATTINA - SOLE */
 .weather-morning-sunny {
     background: linear-gradient(45deg, #ff7e5f, #feb47b, #ffcc33);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
-}
-
-/* MATTINA - PARZIALMENTE NUVOLOSO */
-.weather-morning-partly_cloudy {
-    background: linear-gradient(45deg, #a1c4fd, #c2e9fb, #f6d365);
-    background-size: 400% 400%;
-    animation: gradientShift 20s ease infinite;
 }
 
 /* MATTINA - NUVOLOSO */
@@ -28,39 +21,11 @@
     animation: gradientShift 12s ease infinite;
 }
 
-/* MATTINA - NEVE */
-.weather-morning-snowy {
-    background: linear-gradient(45deg, #e6e9f0, #eef1f5, #d4e6f1);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-}
-
-/* MATTINA - TEMPORALE */
-.weather-morning-stormy {
-    background: linear-gradient(45deg, #373b44, #4286f4, #373b44);
-    background-size: 400% 400%;
-    animation: gradientShift 8s ease infinite;
-}
-
-/* MATTINA - NEBBIA */
-.weather-morning-foggy {
-    background: linear-gradient(45deg, #bdc3c7, #2c3e50, #bdc3c7);
-    background-size: 400% 400%;
-    animation: gradientShift 25s ease infinite;
-}
-
 /* POMERIGGIO - SOLE */
 .weather-afternoon-sunny {
     background: linear-gradient(45deg, #ff9966, #ff5e62, #ff2e63);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
-}
-
-/* POMERIGGIO - PARZIALMENTE NUVOLOSO */
-.weather-afternoon-partly_cloudy {
-    background: linear-gradient(45deg, #ffd89b, #19547b, #ffd89b);
-    background-size: 400% 400%;
-    animation: gradientShift 18s ease infinite;
 }
 
 /* POMERIGGIO - NUVOLOSO */
@@ -77,32 +42,11 @@
     animation: gradientShift 12s ease infinite;
 }
 
-/* POMERIGGIO - NEVE */
-.weather-afternoon-snowy {
-    background: linear-gradient(45deg, #acb6e5, #86fde8, #acb6e5);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-}
-
-/* POMERIGGIO - TEMPORALE */
-.weather-afternoon-stormy {
-    background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
-    background-size: 400% 400%;
-    animation: gradientShift 10s ease infinite;
-}
-
 /* SERA - SOLE */
 .weather-evening-sunny {
     background: linear-gradient(45deg, #667eea, #764ba2, #6B8DD6);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
-}
-
-/* SERA - PARZIALMENTE NUVOLOSO */
-.weather-evening-partly_cloudy {
-    background: linear-gradient(45deg, #4b6cb7, #182848, #4b6cb7);
-    background-size: 400% 400%;
-    animation: gradientShift 20s ease infinite;
 }
 
 /* SERA - NUVOLOSO */
@@ -120,7 +64,7 @@
 }
 
 /* NOTTE - SERENO */
-.weather-night-sunny {
+.weather-night-clear {
     background: linear-gradient(45deg, #0c2461, #1e3799, #0c2461);
     background-size: 400% 400%;
     animation: gradientShift 25s ease infinite;
@@ -131,13 +75,6 @@
     background: linear-gradient(45deg, #1a2980, #26d0ce, #1a2980);
     background-size: 400% 400%;
     animation: gradientShift 20s ease infinite;
-}
-
-/* NOTTE - PIOGGIA */
-.weather-night-rainy {
-    background: linear-gradient(45deg, #000046, #1cb5e0, #000046);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
 }
 
 /* Animazione per il movimento del gradiente */
@@ -151,4 +88,17 @@
     100% {
         background-position: 0% 50%;
     }
+}
+
+/* Effetti particellari aggiuntivi */
+.particles-sunny {
+    /* Particelle gialle/arancioni per il sole */
+}
+
+.particles-cloudy {
+    /* Particelle bianche/grigie per nuvole */
+}
+
+.particles-rainy {
+    /* Particelle blu/grigie per pioggia */
 }
