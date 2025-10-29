@@ -33,6 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCountdown();
     setInterval(updateCountdown, 1000);
     
-    // Avvia servizio meteo
-    weatherService.init();
+    // Avvia simulatore meteo
+    weatherSimulator.init();
 });
