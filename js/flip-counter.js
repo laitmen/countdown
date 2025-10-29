@@ -1,4 +1,3 @@
-flip-counter.js
 class FlipCounter {
     constructor(elementId) {
         this.element = document.getElementById(elementId);
