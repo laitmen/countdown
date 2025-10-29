@@ -3,31 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Countdown 2 Novembre - Santa Cristina Valgardena</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/weather-backgrounds.css">
+    <link rel="stylesheet" href="css/flip-animation.css">
 </head>
 <body>
-    <div class="countdown-container">
-        <div class="countdown">
-            <div class="time-box">
-                <span id="days">00</span>
-                <p>Giorni</p>
+    <div id="dynamic-background"></div>
+    <div id="particles-js"></div>
+    
+    <!-- Menu controllo meteo -->
+    <div class="weather-controls">
+        <div class="weather-toggle" id="weatherToggle">
+            🌤️ Cambia Meteo
+        </div>
+        <div class="weather-dropdown" id="weatherDropdown">
+            <div class="weather-option" data-weather="clear">
+                <span class="weather-option-icon">☀️</span>
+                <span class="weather-option-name">Soleggiato</span>
             </div>
-            <div class="time-box">
-                <span id="hours">00</span>
-                <p>Ore</p>
+            <div class="weather-option" data-weather="partly_cloudy">
+                <span class="weather-option-icon">⛅</span>
+                <span class="weather-option-name">Parz. Nuvoloso</span>
             </div>
-            <div class="time-box">
-                <span id="minutes">00</span>
-                <p>Minuti</p>
+            <div class="weather-option" data-weather="cloudy">
+                <span class="weather-option-icon">☁️</span>
+                <span class="weather-option-name">Nuvoloso</span>
             </div>
-            <div class="time-box">
-                <span id="seconds">00</span>
-                <p>Secondi</p>
+            <div class="weather-option" data-weather="rain">
+                <span class="weather-option-icon">🌧️</span>
+                <span class="weather-option-name">Pioggia</span>
+            </div>
+            <div class="weather-option" data-weather="snow">
+                <span class="weather-option-icon">❄️</span>
+                <span class="weather-option-name">Neve</span>
+            </div>
+            <div class="weather-option" data-weather="thunderstorm">
+                <span class="weather-option-icon">⛈️</span>
+                <span class="weather-option-name">Temporale</span>
+            </div>
+            <div class="weather-option" data-weather="fog">
+                <span class="weather-option-icon">🌫️</span>
+                <span class="weather-option-name">Nebbia</span>
+            </div>
+            <div class="weather-option" data-weather="auto">
+                <span class="weather-option-icon">🔄</span>
+                <span class="weather-option-name">Automatico</span>
             </div>
         </div>
     </div>
+    
+    <div class="container">
+        <h1>Countdown al 2 Novembre</h1>
+        <div class="target-date" id="targetDate">
+            <!-- Qui verrà inserito il meteo -->
+        </div>
+        
+        <div class="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">
+                    <!-- Flip cards per giorni -->
+                </div>
+                <div class="countdown-label">Giorni</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">
+                    <!-- Flip cards per ore -->
+                </div>
+                <div class="countdown-label">Ore</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">
+                    <!-- Flip cards per minuti -->
+                </div>
+                <div class="countdown-label">Minuti</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">
+                    <!-- Flip cards per secondi -->
+                </div>
+                <div class="countdown-label">Secondi</div>
+            </div>
+        </div>
+        
+        <div class="message" id="message">
+            Il countdown è terminato!
+        </div>
+    </div>
 
-    <script src="script.js"></script>
+    <!-- Particle.js library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/flip-counter.js"></script>
+    <script src="js/weather-simulator.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
