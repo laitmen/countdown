@@ -6,7 +6,6 @@
 }
 
 body {
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
     color: white;
     min-height: 100vh;
     display: flex;
@@ -15,6 +14,27 @@ body {
     justify-content: center;
     padding: 20px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+#dynamic-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    transition: all 2s ease-in-out;
+}
+
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
 
 .container {
@@ -25,6 +45,32 @@ body {
     padding: 40px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 1;
+}
+
+.weather-info {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.weather-loading {
+    font-style: italic;
+}
+
+.weather-data {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.weather-icon {
+    font-size: 1.2rem;
 }
 
 h1 {
@@ -53,6 +99,11 @@ h1 {
     padding: 20px;
     min-width: 120px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.countdown-item:hover {
+    transform: translateY(-5px);
 }
 
 .countdown-number {
@@ -94,5 +145,10 @@ h1 {
     
     .countdown-number {
         font-size: 2rem;
+    }
+    
+    .weather-info {
+        position: static;
+        margin-bottom: 20px;
     }
 }
