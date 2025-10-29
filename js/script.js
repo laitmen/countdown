@@ -74,4 +74,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // Avvia simulatore meteo
     weatherSimulator.init();
 });
-
