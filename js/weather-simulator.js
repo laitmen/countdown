@@ -105,4 +105,203 @@ class WeatherSimulator {
     }
 
     pickWeightedCondition(conditions) {
-        const totalWeight = conditions.reduce((sum, item) => sum + item.weight
+        const totalWeight = conditions.reduce((sum, item) => sum + item.weight, 0);
+        let random = Math.random() * totalWeight;
+        
+        for (const item of conditions) {
+            random -= item.weight;
+            if (random <= 0) {
+                return item.condition;
+            }
+        }
+        
+        return conditions[0].condition;
+    }
+
+    getHumidity(condition, season) {
+        const baseHumidity = {
+            clear: 45, partly_cloudy: 60, cloudy: 75, 
+            rain: 85, snow: 80, thunderstorm: 90, fog: 95
+        };
+        
+        const seasonalAdjustment = {
+            winter: 0, spring: 5, summer: -5, autumn: 10
+        };
+        
+        return baseHumidity[condition] + seasonalAdjustment[season];
+    }
+
+    getWindSpeed(condition) {
+        const baseSpeeds = {
+            clear: 2, partly_cloudy: 3, cloudy: 4, 
+            rain: 5, snow: 3, thunderstorm: 8, fog: 1
+        };
+        
+        // Variazione ±2 km/h
+        return baseSpeeds[condition] + (Math.random() * 4 - 2);
+    }
+
+    getWeatherDescription(condition) {
+        const descriptions = {
+            clear: "Sereno",
+            partly_cloudy: "Parzialmente nuvoloso",
+            cloudy: "Nuvoloso",
+            rain: "Pioggia",
+            snow: "Neve",
+            thunderstorm: "Temporale",
+            fog: "Nebbia"
+        };
+        
+        return descriptions[condition];
+    }
+
+    getWeatherEmoji(condition) {
+        const emojis = {
+            clear: "☀️",
+            partly_cloudy: "⛅",
+            cloudy: "☁️",
+            rain: "🌧️",
+            snow: "❄️",
+            thunderstorm: "⛈️",
+            fog: "🌫️"
+        };
+        
+        return emojis[condition];
+    }
+
+    getWeatherClass() {
+        const timeOfDay = this.getTimeOfDay();
+        const condition = this.currentWeather.condition;
+        
+        // Mappa per classi CSS
+        const conditionMap = {
+            'clear': 'sunny',
+            'partly_cloudy': 'partly_cloudy',
+            'cloudy': 'cloudy',
+            'rain': 'rainy',
+            'snow': 'snowy',
+            'thunderstorm': 'stormy',
+            'fog': 'foggy'
+        };
+
+        const timeMap = {
+            'early_morning': 'morning',
+            'morning': 'morning',
+            'midday': 'afternoon',
+            'afternoon': 'afternoon',
+            'evening': 'evening',
+            'night': 'night'
+        };
+
+        const weatherCondition = conditionMap[condition] || 'sunny';
+        const timeClass = timeMap[timeOfDay] || 'day';
+        
+        return `weather-${timeClass}-${weatherCondition}`;
+    }
+
+    setManualWeather(condition) {
+        if (condition === 'auto') {
+            this.manualOverride = false;
+            this.currentWeather = this.generateRealisticWeather();
+        } else {
+            this.manualOverride = true;
+            this.manualWeather = {
+                condition: condition,
+                description: this.getWeatherDescription(condition),
+                temperature: this.getManualTemperature(condition),
+                humidity: this.getHumidity(condition, this.getSeason()),
+                windSpeed: this.getWindSpeed(condition),
+                timestamp: new Date()
+            };
+        }
+        this.updateWeatherDisplay();
+    }
+
+    getManualTemperature(condition) {
+        const baseTemp = this.getBaseTemperature(this.getSeason(), this.getTimeOfDay());
+        const adjustments = {
+            clear: 2, partly_cloudy: 0, cloudy: -2, 
+            rain: -5, snow: -8, thunderstorm: -3, fog: -1
+        };
+        return Math.round(baseTemp + (adjustments[condition] || 0));
+    }
+
+    getCurrentWeather() {
+        if (this.manualOverride && this.manualWeather) {
+            return this.manualWeather;
+        }
+        return this.currentWeather;
+    }
+
+    updateWeather() {
+        if (!this.manualOverride) {
+            // Cambia gradualmente il meteo solo se non in manuale
+            if (Math.random() < 0.3) {
+                this.currentWeather = this.generateRealisticWeather();
+                this.updateWeatherDisplay();
+            }
+        }
+    }
+
+    updateWeatherDisplay() {
+        const weatherData = this.getCurrentWeather();
+        const targetDateElement = document.getElementById('targetDate');
+        const weatherClass = this.getWeatherClass();
+        
+        // Aggiorna sfondo
+        const backgroundElement = document.getElementById('dynamic-background');
+        backgroundElement.className = weatherClass;
+        
+        // Aggiorna particelle
+        if (typeof initParticles === 'function') {
+            initParticles(weatherData.condition);
+        }
+        
+        // Aggiorna display meteo
+        targetDateElement.innerHTML = `
+            <div class="weather-display">
+                <div class="weather-icon">${this.getWeatherEmoji(weatherData.condition)}</div>
+                <div class="weather-temp">${weatherData.temperature}°C</div>
+                <div class="weather-desc">${weatherData.description}</div>
+                ${this.manualOverride ? '<div class="weather-manual">🎛️ Manuale</div>' : ''}
+            </div>
+            <div class="date-info">
+                manca poco
+            </div>
+        `;
+        
+        // Aggiorna opzione attiva nel menu
+        this.updateWeatherMenu(weatherData.condition);
+    }
+
+    updateWeatherMenu(currentCondition) {
+        const options = document.querySelectorAll('.weather-option');
+        options.forEach(option => {
+            option.classList.remove('active');
+            if (option.dataset.weather === currentCondition || 
+                (!this.manualOverride && option.dataset.weather === 'auto')) {
+                option.classList.add('active');
+            }
+        });
+    }
+
+    init() {
+        this.updateWeatherDisplay();
+        
+        // Aggiorna meteo ogni 15 minuti (simulato)
+        setInterval(() => {
+            this.updateWeather();
+            this.updateWeatherDisplay();
+        }, 15 * 60 * 1000);
+        
+        // Piccole variazioni ogni 2 minuti
+        setInterval(() => {
+            this.currentWeather.temperature += (Math.random() - 0.5) * 2;
+            this.currentWeather.temperature = Math.round(this.currentWeather.temperature);
+            this.updateWeatherDisplay();
+        }, 2 * 60 * 1000);
+    }
+}
+
+// Inizializza simulatore meteo
+const weatherSimulator = new WeatherSimulator();
