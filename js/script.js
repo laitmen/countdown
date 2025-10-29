@@ -1,25 +1,76 @@
-// Imposta la data del countdown
-const targetDate = new Date("Nov 2, 2025 00:00:00").getTime();
+// Data di destinazione: 2 Novembre 2025 alle 14:30
+const targetDate = new Date(2025, 10, 2, 14, 30, 0);
+
+// Inizializza flip counters
+let flipDays, flipHours, flipMinutes, flipSeconds;
 
 function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-
-    if (distance < 0) {
-        document.querySelector(".countdown").innerHTML = "<h2>È arrivato il 2 Novembre!</h2>";
+    const now = new Date();
+    const timeDifference = targetDate - now;
+    
+    // Se il countdown è terminato
+    if (timeDifference <= 0) {
+        flipDays.update('00');
+        flipHours.update('00');
+        flipMinutes.update('00');
+        flipSeconds.update('00');
+        document.getElementById('message').style.display = 'block';
         return;
     }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById("days").textContent = days.toString().padStart(2, "0");
-    document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
-    document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
-    document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
+    
+    // Calcolo giorni, ore, minuti e secondi
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+    
+    // Aggiornamento dei valori con animazione flip
+    flipDays.update(days.toString().padStart(2, '0'));
+    flipHours.update(hours.toString().padStart(2, '0'));
+    flipMinutes.update(minutes.toString().padStart(2, '0'));
+    flipSeconds.update(seconds.toString().padStart(2, '0'));
 }
 
-setInterval(updateCountdown, 1000);
-updateCountdown();
+// Gestione menu meteo
+function setupWeatherControls() {
+    const toggle = document.getElementById('weatherToggle');
+    const dropdown = document.getElementById('weatherDropdown');
+    const options = document.querySelectorAll('.weather-option');
+
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('show');
+    });
+
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            const weatherType = option.dataset.weather;
+            weatherSimulator.setManualWeather(weatherType);
+            dropdown.classList.remove('show');
+        });
+    });
+
+    // Chiudi dropdown cliccando fuori
+    document.addEventListener('click', () => {
+        dropdown.classList.remove('show');
+    });
+}
+
+// Inizializzazione
+document.addEventListener('DOMContentLoaded', function() {
+    // Inizializza flip counters
+    flipDays = new FlipCounter('days');
+    flipHours = new FlipCounter('hours');
+    flipMinutes = new FlipCounter('minutes');
+    flipSeconds = new FlipCounter('seconds');
+    
+    // Aggiorna countdown
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    
+    // Setup controlli meteo
+    setupWeatherControls();
+    
+    // Avvia simulatore meteo
+    weatherSimulator.init();
+});
