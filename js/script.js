@@ -1,14 +1,8 @@
-// Data di destinazione: 2 Novembre alle 22:00
-const targetDate = new Date();
-// Impostiamo l'anno corrente per il 2 Novembre
-targetDate.setMonth(10); // Novembre è il mese 10 (0-based)
-targetDate.setDate(2);
-targetDate.setHours(22, 0, 0, 0);
+// Data di destinazione: 2 Novembre 2025 alle 14:30
+const targetDate = new Date(2025, 10, 2, 14, 30, 0); // mese 10 => Novembre
 
-// Se siamo già passati dal 2 Novembre di quest'anno, impostiamo per l'anno prossimo
-if (targetDate < new Date()) {
-    targetDate.setFullYear(targetDate.getFullYear() + 1);
-}
+// Inizializza flip counters
+let flipDays, flipHours, flipMinutes, flipSeconds;
 
 function updateCountdown() {
     const now = new Date();
@@ -16,12 +10,12 @@ function updateCountdown() {
     
     // Se il countdown è terminato
     if (timeDifference <= 0) {
-        document.getElementById('days').textContent = '00';
-        document.getElementById('hours').textContent = '00';
-        document.getElementById('minutes').textContent = '00';
-        document.getElementById('seconds').textContent = '00';
-        document.getElementById('message').style.display = 'block';
-        document.getElementById('progressBar').style.width = '100%';
+        if (flipDays) flipDays.update('00');
+        if (flipHours) flipHours.update('00');
+        if (flipMinutes) flipMinutes.update('00');
+        if (flipSeconds) flipSeconds.update('00');
+        const msg = document.getElementById('message');
+        if (msg) msg.style.display = 'block';
         return;
     }
     
@@ -31,23 +25,27 @@ function updateCountdown() {
     const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
     
-    // Aggiornamento dei valori nel DOM
-    document.getElementById('days').textContent = days.toString().padStart(2, '0');
-    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-    
-    // Calcolo della percentuale di completamento
-    const startDate = new Date(targetDate.getFullYear(), 0, 1); // 1 Gennaio dello stesso anno
-    const totalTime = targetDate - startDate;
-    const elapsedTime = now - startDate;
-    const progressPercentage = Math.min((elapsedTime / totalTime) * 100, 100);
-    
-    document.getElementById('progressBar').style.width = progressPercentage + '%';
+    // Aggiornamento dei valori con animazione flip (difensivo)
+    if (flipDays) flipDays.update(String(days).padStart(2, '0'));
+    if (flipHours) flipHours.update(String(hours).padStart(2, '0'));
+    if (flipMinutes) flipMinutes.update(String(minutes).padStart(2, '0'));
+    if (flipSeconds) flipSeconds.update(String(seconds).padStart(2, '0'));
 }
 
-// Aggiornamento iniziale
-updateCountdown();
-
-// Aggiornamento ogni secondo
-setInterval(updateCountdown, 1000);
+// Inizializzazione
+document.addEventListener('DOMContentLoaded', function() {
+    // Inizializza flip counters
+    flipDays = new FlipCounter('days');
+    flipHours = new FlipCounter('hours');
+    flipMinutes = new FlipCounter('minutes');
+    flipSeconds = new FlipCounter('seconds');
+    
+    // Aggiorna countdown subito e poi ogni secondo
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    
+    // Avvia simulatore meteo (se è definito)
+    if (typeof weatherSimulator !== 'undefined' && weatherSimulator && typeof weatherSimulator.init === 'function') {
+        weatherSimulator.init();
+    }
+});
