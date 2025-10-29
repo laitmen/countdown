@@ -266,7 +266,7 @@ class WeatherSimulator {
                 ${this.manualOverride ? '<div class="weather-manual">🎛️ Manuale</div>' : ''}
             </div>
             <div class="date-info">
-                manca poco
+                Santa Cristina Valgardena • 2 Novembre 2025, 14:30
             </div>
         `;
         
