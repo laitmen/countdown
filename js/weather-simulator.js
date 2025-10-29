@@ -205,7 +205,7 @@ class WeatherSimulator {
     }
 
     updateWeatherDisplay() {
-        const weatherElement = document.getElementById('weatherInfo');
+        const targetDateElement = document.getElementById('targetDate');
         const weatherClass = this.getWeatherClass();
         
         // Aggiorna sfondo
@@ -217,13 +217,15 @@ class WeatherSimulator {
             initParticles(this.currentWeather.condition);
         }
         
-        // Aggiorna info meteo con nuovo formato
-        weatherElement.innerHTML = `
-            <div class="weather-data">
+        // Aggiorna display meteo nel target-date
+        targetDateElement.innerHTML = `
+            <div class="weather-display">
                 <div class="weather-icon">${this.getWeatherEmoji(this.currentWeather.condition)}</div>
-                <div class="weather-temperature">${this.currentWeather.temperature}°C</div>
-                <div class="weather-description">${this.currentWeather.description}</div>
-                <div class="weather-location">${this.location}</div>
+                <div class="weather-temp">${this.currentWeather.temperature}°C</div>
+                <div class="weather-desc">${this.currentWeather.description}</div>
+            </div>
+            <div class="date-info">
+                Santa Cristina Valgardena • 2 Novembre 2025, 14:30
             </div>
         `;
     }
