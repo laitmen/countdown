@@ -217,12 +217,13 @@ class WeatherSimulator {
             initParticles(this.currentWeather.condition);
         }
         
-        // Aggiorna info meteo
+        // Aggiorna info meteo con nuovo formato
         weatherElement.innerHTML = `
             <div class="weather-data">
-                <span class="weather-icon">${this.getWeatherEmoji(this.currentWeather.condition)}</span>
-                <span>${this.currentWeather.temperature}°C - ${this.currentWeather.description}</span>
-                <small>${this.location}</small>
+                <div class="weather-icon">${this.getWeatherEmoji(this.currentWeather.condition)}</div>
+                <div class="weather-temperature">${this.currentWeather.temperature}°C</div>
+                <div class="weather-description">${this.currentWeather.description}</div>
+                <div class="weather-location">${this.location}</div>
             </div>
         `;
     }
