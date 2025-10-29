@@ -2,8 +2,6 @@ class WeatherSimulator {
     constructor() {
         this.location = "Santa Cristina Valgardena";
         this.currentWeather = this.generateRealisticWeather();
-        this.manualOverride = false;
-        this.manualWeather = null;
     }
 
     getSeason() {
@@ -148,49 +146,8 @@ class WeatherSimulator {
         return `weather-${timeOfDay}-${weatherCondition}`;
     }
 
-    setManualWeather(condition) {
-        if (condition === 'auto') {
-            this.manualOverride = false;
-            this.currentWeather = this.generateRealisticWeather();
-        } else {
-            this.manualOverride = true;
-            this.manualWeather = {
-                condition: condition,
-                description: this.getWeatherDescription(condition),
-                temperature: this.getManualTemperature(condition),
-                timestamp: new Date()
-            };
-        }
-        this.updateWeatherDisplay();
-    }
-
-    getManualTemperature(condition) {
-        const baseTemp = this.getBaseTemperature(this.getSeason(), this.getTimeOfDay());
-        const adjustments = {
-            clear: 2, partly_cloudy: 0, cloudy: -2, 
-            rain: -5, snow: -8, thunderstorm: -3, fog: -1
-        };
-        return Math.round(baseTemp + (adjustments[condition] || 0));
-    }
-
-    getCurrentWeather() {
-        if (this.manualOverride && this.manualWeather) {
-            return this.manualWeather;
-        }
-        return this.currentWeather;
-    }
-
-    updateWeather() {
-        if (!this.manualOverride) {
-            if (Math.random() < 0.3) {
-                this.currentWeather = this.generateRealisticWeather();
-                this.updateWeatherDisplay();
-            }
-        }
-    }
-
     updateWeatherDisplay() {
-        const weatherData = this.getCurrentWeather();
+        const targetDateElement = document.getElementById('targetDate');
         const weatherClass = this.getWeatherClass();
         
         // Aggiorna sfondo
@@ -199,22 +156,27 @@ class WeatherSimulator {
         
         // Aggiorna particelle
         if (typeof initParticles === 'function') {
-            initParticles(weatherData.condition);
+            initParticles(this.currentWeather.condition);
         }
         
-        // Aggiorna opzione attiva nel menu
-        this.updateWeatherMenu(weatherData.condition);
+        // Aggiorna display meteo
+        targetDateElement.innerHTML = `
+            <div class="weather-display">
+                <div class="weather-icon">${this.getWeatherEmoji(this.currentWeather.condition)}</div>
+                <div class="weather-temp">${this.currentWeather.temperature}°C</div>
+                <div class="weather-desc">${this.currentWeather.description}</div>
+            </div>
+            <div class="date-info">
+                Manca poco!
+            </div>
+        `;
     }
 
-    updateWeatherMenu(currentCondition) {
-        const options = document.querySelectorAll('.weather-option');
-        options.forEach(option => {
-            option.classList.remove('active');
-            if (option.dataset.weather === currentCondition || 
-                (!this.manualOverride && option.dataset.weather === 'auto')) {
-                option.classList.add('active');
-            }
-        });
+    updateWeather() {
+        if (Math.random() < 0.3) {
+            this.currentWeather = this.generateRealisticWeather();
+            this.updateWeatherDisplay();
+        }
     }
 
     init() {
