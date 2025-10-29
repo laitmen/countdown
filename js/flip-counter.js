@@ -6,28 +6,31 @@ class FlipCounter {
     }
 
     createFlipCards() {
+        // Pulisci l'elemento
         this.element.innerHTML = '';
+        this.element.className = 'countdown-number';
         
+        // Crea due contenitori per le due cifre
         for (let i = 0; i < 2; i++) {
-            const flipCounter = document.createElement('div');
-            flipCounter.className = 'flip-counter';
+            const digitContainer = document.createElement('div');
+            digitContainer.className = 'digit-container';
             
-            const flipCard = document.createElement('div');
-            flipCard.className = 'flip-card';
-            flipCard.id = `flip-${this.element.id}-${i}`;
+            const digitFlip = document.createElement('div');
+            digitFlip.className = 'digit-flip';
+            digitFlip.id = `flip-${this.element.id}-${i}`;
             
-            const top = document.createElement('div');
-            top.className = 'flip-card-top';
-            top.textContent = '0';
+            const digitTop = document.createElement('div');
+            digitTop.className = 'digit-top';
+            digitTop.textContent = '0';
             
-            const bottom = document.createElement('div');
-            bottom.className = 'flip-card-bottom';
-            bottom.textContent = '0';
+            const digitBottom = document.createElement('div');
+            digitBottom.className = 'digit-bottom';
+            digitBottom.textContent = '0';
             
-            flipCard.appendChild(top);
-            flipCard.appendChild(bottom);
-            flipCounter.appendChild(flipCard);
-            this.element.appendChild(flipCounter);
+            digitFlip.appendChild(digitTop);
+            digitFlip.appendChild(digitBottom);
+            digitContainer.appendChild(digitFlip);
+            this.element.appendChild(digitContainer);
         }
         
         this.update(this.currentValue);
@@ -39,16 +42,16 @@ class FlipCounter {
         if (newValue === this.currentValue) return;
         
         for (let i = 0; i < 2; i++) {
-            const flipCard = document.getElementById(`flip-${this.element.id}-${i}`);
+            const digitFlip = document.getElementById(`flip-${this.element.id}-${i}`);
             const currentDigit = parseInt(this.currentValue[i]);
             const newDigit = parseInt(newValue[i]);
             
             if (currentDigit !== newDigit) {
-                this.animateFlip(flipCard, newDigit);
+                this.animateFlip(digitFlip, newDigit);
             } else {
-                // Aggiorna senza animazione se la cifra non è cambiata
-                const top = flipCard.querySelector('.flip-card-top');
-                const bottom = flipCard.querySelector('.flip-card-bottom');
+                // Aggiorna senza animazione
+                const top = digitFlip.querySelector('.digit-top');
+                const bottom = digitFlip.querySelector('.digit-bottom');
                 top.textContent = newDigit;
                 bottom.textContent = newDigit;
             }
@@ -57,12 +60,12 @@ class FlipCounter {
         this.currentValue = newValue;
     }
 
-    animateFlip(flipCard, newDigit) {
-        const top = flipCard.querySelector('.flip-card-top');
-        const bottom = flipCard.querySelector('.flip-card-bottom');
+    animateFlip(digitFlip, newDigit) {
+        const top = digitFlip.querySelector('.digit-top');
+        const bottom = digitFlip.querySelector('.digit-bottom');
         
         // Inizia animazione
-        flipCard.classList.add('flipping');
+        digitFlip.classList.add('flipping');
         
         // Mezzo secondo dopo, aggiorna i numeri
         setTimeout(() => {
@@ -71,7 +74,7 @@ class FlipCounter {
             
             // Fine animazione
             setTimeout(() => {
-                flipCard.classList.remove('flipping');
+                digitFlip.classList.remove('flipping');
             }, 50);
         }, 300);
     }
