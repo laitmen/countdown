@@ -31,31 +31,6 @@ function updateCountdown() {
     flipSeconds.update(seconds.toString().padStart(2, '0'));
 }
 
-// Gestione menu meteo
-function setupWeatherControls() {
-    const toggle = document.getElementById('weatherToggle');
-    const dropdown = document.getElementById('weatherDropdown');
-    const options = document.querySelectorAll('.weather-option');
-
-    toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle('show');
-    });
-
-    options.forEach(option => {
-        option.addEventListener('click', () => {
-            const weatherType = option.dataset.weather;
-            weatherSimulator.setManualWeather(weatherType);
-            dropdown.classList.remove('show');
-        });
-    });
-
-    // Chiudi dropdown cliccando fuori
-    document.addEventListener('click', () => {
-        dropdown.classList.remove('show');
-    });
-}
-
 // Inizializzazione
 document.addEventListener('DOMContentLoaded', function() {
     // Inizializza flip counters
@@ -67,9 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Aggiorna countdown
     updateCountdown();
     setInterval(updateCountdown, 1000);
-    
-    // Setup controlli meteo
-    setupWeatherControls();
     
     // Avvia simulatore meteo
     weatherSimulator.init();
