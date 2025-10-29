@@ -8,20 +8,17 @@ class WeatherSimulator {
 
     getSeason() {
         const month = new Date().getMonth();
-        if (month >= 2 && month <= 4) return 'spring';      // Mar-Mag
-        if (month >= 5 && month <= 7) return 'summer';      // Giu-Ago
-        if (month >= 8 && month <= 10) return 'autumn';     // Set-Nov
-        return 'winter';                                    // Dic-Feb
+        if (month >= 2 && month <= 4) return 'spring';
+        if (month >= 5 && month <= 7) return 'summer';
+        if (month >= 8 && month <= 10) return 'autumn';
+        return 'winter';
     }
 
     getTimeOfDay() {
         const hour = new Date().getHours();
-        if (hour >= 5 && hour < 9) return 'early_morning';
-        if (hour >= 9 && hour < 12) return 'morning';
-        if (hour >= 12 && hour < 15) return 'midday';
-        if (hour >= 15 && hour < 18) return 'afternoon';
-        if (hour >= 18 && hour < 21) return 'evening';
-        if (hour >= 21 || hour < 5) return 'night';
+        if (hour >= 5 && hour < 12) return 'morning';
+        if (hour >= 12 && hour < 18) return 'afternoon';
+        return 'evening';
     }
 
     generateRealisticWeather() {
@@ -29,47 +26,34 @@ class WeatherSimulator {
         const timeOfDay = this.getTimeOfDay();
         const baseTemp = this.getBaseTemperature(season, timeOfDay);
         
-        // Probabilità di condizioni meteo basate su stagione e Dolomiti
         const weatherConditions = this.getWeatherProbabilities(season);
         const condition = this.pickWeightedCondition(weatherConditions);
         
-        // Temperatura con variazione realistica
-        const tempVariation = (Math.random() - 0.5) * 8; // ±4 gradi
+        const tempVariation = (Math.random() - 0.5) * 8;
         const temperature = Math.round(baseTemp + tempVariation);
         
-        // Umidità basata su condizione
-        const humidity = this.getHumidity(condition, season);
-        
-        // Vento tipico delle Dolomiti
-        const windSpeed = this.getWindSpeed(condition);
-
         return {
             temperature: temperature,
             condition: condition,
             description: this.getWeatherDescription(condition),
-            humidity: humidity,
-            windSpeed: windSpeed,
             location: this.location,
             season: season,
-            timeOfDay: timeOfDay,
-            timestamp: new Date()
+            timeOfDay: timeOfDay
         };
     }
 
     getBaseTemperature(season, timeOfDay) {
-        // Temperature medie per Santa Cristina Valgardena (1360m slm)
         const baseTemps = {
-            winter: { early_morning: -5, morning: -2, midday: 3, afternoon: 2, evening: -1, night: -6 },
-            spring: { early_morning: 2, morning: 6, midday: 12, afternoon: 11, evening: 7, night: 1 },
-            summer: { early_morning: 8, morning: 12, midday: 18, afternoon: 17, evening: 13, night: 7 },
-            autumn: { early_morning: 3, morning: 7, midday: 11, afternoon: 10, evening: 6, night: 2 }
+            winter: { morning: -2, afternoon: 3, evening: -1 },
+            spring: { morning: 6, afternoon: 12, evening: 7 },
+            summer: { morning: 12, afternoon: 18, evening: 13 },
+            autumn: { morning: 7, afternoon: 11, evening: 6 }
         };
         
         return baseTemps[season][timeOfDay];
     }
 
     getWeatherProbabilities(season) {
-        // Probabilità realistiche per le Dolomiti
         const probabilities = {
             winter: [
                 { condition: 'clear', weight: 40 },
@@ -118,29 +102,6 @@ class WeatherSimulator {
         return conditions[0].condition;
     }
 
-    getHumidity(condition, season) {
-        const baseHumidity = {
-            clear: 45, partly_cloudy: 60, cloudy: 75, 
-            rain: 85, snow: 80, thunderstorm: 90, fog: 95
-        };
-        
-        const seasonalAdjustment = {
-            winter: 0, spring: 5, summer: -5, autumn: 10
-        };
-        
-        return baseHumidity[condition] + seasonalAdjustment[season];
-    }
-
-    getWindSpeed(condition) {
-        const baseSpeeds = {
-            clear: 2, partly_cloudy: 3, cloudy: 4, 
-            rain: 5, snow: 3, thunderstorm: 8, fog: 1
-        };
-        
-        // Variazione ±2 km/h
-        return baseSpeeds[condition] + (Math.random() * 4 - 2);
-    }
-
     getWeatherDescription(condition) {
         const descriptions = {
             clear: "Sereno",
@@ -173,30 +134,18 @@ class WeatherSimulator {
         const timeOfDay = this.getTimeOfDay();
         const condition = this.currentWeather.condition;
         
-        // Mappa per classi CSS
         const conditionMap = {
             'clear': 'sunny',
-            'partly_cloudy': 'partly_cloudy',
+            'partly_cloudy': 'cloudy',
             'cloudy': 'cloudy',
             'rain': 'rainy',
-            'snow': 'snowy',
-            'thunderstorm': 'stormy',
-            'fog': 'foggy'
-        };
-
-        const timeMap = {
-            'early_morning': 'morning',
-            'morning': 'morning',
-            'midday': 'afternoon',
-            'afternoon': 'afternoon',
-            'evening': 'evening',
-            'night': 'night'
+            'snow': 'rainy',
+            'thunderstorm': 'rainy',
+            'fog': 'cloudy'
         };
 
         const weatherCondition = conditionMap[condition] || 'sunny';
-        const timeClass = timeMap[timeOfDay] || 'day';
-        
-        return `weather-${timeClass}-${weatherCondition}`;
+        return `weather-${timeOfDay}-${weatherCondition}`;
     }
 
     setManualWeather(condition) {
@@ -209,8 +158,6 @@ class WeatherSimulator {
                 condition: condition,
                 description: this.getWeatherDescription(condition),
                 temperature: this.getManualTemperature(condition),
-                humidity: this.getHumidity(condition, this.getSeason()),
-                windSpeed: this.getWindSpeed(condition),
                 timestamp: new Date()
             };
         }
@@ -235,7 +182,6 @@ class WeatherSimulator {
 
     updateWeather() {
         if (!this.manualOverride) {
-            // Cambia gradualmente il meteo solo se non in manuale
             if (Math.random() < 0.3) {
                 this.currentWeather = this.generateRealisticWeather();
                 this.updateWeatherDisplay();
@@ -245,7 +191,6 @@ class WeatherSimulator {
 
     updateWeatherDisplay() {
         const weatherData = this.getCurrentWeather();
-        const targetDateElement = document.getElementById('targetDate');
         const weatherClass = this.getWeatherClass();
         
         // Aggiorna sfondo
@@ -256,19 +201,6 @@ class WeatherSimulator {
         if (typeof initParticles === 'function') {
             initParticles(weatherData.condition);
         }
-        
-        // Aggiorna display meteo
-        targetDateElement.innerHTML = `
-            <div class="weather-display">
-                <div class="weather-icon">${this.getWeatherEmoji(weatherData.condition)}</div>
-                <div class="weather-temp">${weatherData.temperature}°C</div>
-                <div class="weather-desc">${weatherData.description}</div>
-                ${this.manualOverride ? '<div class="weather-manual">🎛️ Manuale</div>' : ''}
-            </div>
-            <div class="date-info">
-                Santa Cristina Valgardena • 2 Novembre 2025, 14:30
-            </div>
-        `;
         
         // Aggiorna opzione attiva nel menu
         this.updateWeatherMenu(weatherData.condition);
@@ -288,18 +220,10 @@ class WeatherSimulator {
     init() {
         this.updateWeatherDisplay();
         
-        // Aggiorna meteo ogni 15 minuti (simulato)
+        // Aggiorna meteo ogni 15 minuti
         setInterval(() => {
             this.updateWeather();
-            this.updateWeatherDisplay();
         }, 15 * 60 * 1000);
-        
-        // Piccole variazioni ogni 2 minuti
-        setInterval(() => {
-            this.currentWeather.temperature += (Math.random() - 0.5) * 2;
-            this.currentWeather.temperature = Math.round(this.currentWeather.temperature);
-            this.updateWeatherDisplay();
-        }, 2 * 60 * 1000);
     }
 }
 
