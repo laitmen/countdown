@@ -1,4 +1,3 @@
-script.js
 // Data di destinazione: 2 Novembre 2025 alle 14:30
 const targetDate = new Date(2025, 10, 2, 14, 30, 0);
 
@@ -75,3 +74,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Avvia simulatore meteo
     weatherSimulator.init();
 });
+
