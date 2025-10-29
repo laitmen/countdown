@@ -1,61 +1,69 @@
 /* Flip card animation per countdown */
-.flip-counter {
-    perspective: 400px;
-    display: inline-block;
-}
-
-.flip-card {
-    position: relative;
-    width: 80px;
+.countdown-number {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
     height: 100px;
-    transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    align-items: center;
 }
 
-.flip-card.flipping {
+.digit-container {
+    display: inline-block;
+    width: 50px;
+    height: 80px;
+    perspective: 400px;
+}
+
+.digit-flip {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+}
+
+.digit-flip.flipping {
     transform: rotateX(-90deg);
 }
 
-.flip-card-top,
-.flip-card-bottom {
+.digit-top,
+.digit-bottom {
     position: absolute;
     width: 100%;
     height: 50%;
-    background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.2) 0%,
-        rgba(255, 255, 255, 0.1) 100%);
-    border-radius: 8px 8px 0 0;
-    overflow: hidden;
-    backface-visibility: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3.5rem;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.1) 100%);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 2.5rem;
     font-weight: 300;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    backface-visibility: hidden;
     background: linear-gradient(45deg, #fff, #e0f7fa, #fff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-.flip-card-top {
+.digit-top {
     top: 0;
     align-items: flex-end;
     padding-bottom: 5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.flip-card-bottom {
+.digit-bottom {
     bottom: 0;
     align-items: flex-start;
     padding-top: 5px;
-    border-radius: 0 0 8px 8px;
     transform: rotateX(180deg);
 }
 
-.flip-card-top::before,
-.flip-card-bottom::before {
+.digit-top::before,
+.digit-bottom::before {
     content: '';
     position: absolute;
     top: 0;
@@ -161,14 +169,14 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-    .flip-card {
-        width: 60px;
-        height: 80px;
+    .digit-container {
+        width: 40px;
+        height: 70px;
     }
     
-    .flip-card-top,
-    .flip-card-bottom {
-        font-size: 2.8rem;
+    .digit-top,
+    .digit-bottom {
+        font-size: 2rem;
     }
     
     .weather-controls {
@@ -182,14 +190,14 @@
 }
 
 @media (max-width: 480px) {
-    .flip-card {
-        width: 50px;
-        height: 70px;
+    .digit-container {
+        width: 35px;
+        height: 60px;
     }
     
-    .flip-card-top,
-    .flip-card-bottom {
-        font-size: 2.2rem;
+    .digit-top,
+    .digit-bottom {
+        font-size: 1.8rem;
     }
     
     .weather-toggle {
