@@ -1,14 +1,5 @@
-// Data di destinazione: 2 Novembre alle 22:00
-const targetDate = new Date();
-// Impostiamo l'anno corrente per il 2 Novembre
-targetDate.setMonth(10); // Novembre è il mese 10 (0-based)
-targetDate.setDate(2);
-targetDate.setHours(22, 0, 0, 0);
-
-// Se siamo già passati dal 2 Novembre di quest'anno, impostiamo per l'anno prossimo
-if (targetDate < new Date()) {
-    targetDate.setFullYear(targetDate.getFullYear() + 1);
-}
+// Data di destinazione: 2 Novembre 2025 alle 22:00
+const targetDate = new Date(2025, 10, 2, 22, 0, 0); // Anno 2025, Mese 10 (Novembre), Giorno 2, Ore 22, Minuti 0, Secondi 0
 
 function updateCountdown() {
     const now = new Date();
