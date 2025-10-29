@@ -1,0 +1,104 @@
+/* Gradienti animati per diverse condizioni meteo e ore del giorno */
+
+/* MATTINA - SOLE */
+.weather-morning-sunny {
+    background: linear-gradient(45deg, #ff7e5f, #feb47b, #ffcc33);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+/* MATTINA - NUVOLOSO */
+.weather-morning-cloudy {
+    background: linear-gradient(45deg, #a1c4fd, #c2e9fb, #d4e6f1);
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+}
+
+/* MATTINA - PIOGGIA */
+.weather-morning-rainy {
+    background: linear-gradient(45deg, #757f9a, #6a93cb, #4b6cb7);
+    background-size: 400% 400%;
+    animation: gradientShift 12s ease infinite;
+}
+
+/* POMERIGGIO - SOLE */
+.weather-afternoon-sunny {
+    background: linear-gradient(45deg, #ff9966, #ff5e62, #ff2e63);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+/* POMERIGGIO - NUVOLOSO */
+.weather-afternoon-cloudy {
+    background: linear-gradient(45deg, #8e9eab, #eef2f3, #bdc3c7);
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+}
+
+/* POMERIGGIO - PIOGGIA */
+.weather-afternoon-rainy {
+    background: linear-gradient(45deg, #2c3e50, #4ca1af, #2c3e50);
+    background-size: 400% 400%;
+    animation: gradientShift 12s ease infinite;
+}
+
+/* SERA - SOLE */
+.weather-evening-sunny {
+    background: linear-gradient(45deg, #667eea, #764ba2, #6B8DD6);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+/* SERA - NUVOLOSO */
+.weather-evening-cloudy {
+    background: linear-gradient(45deg, #4b6cb7, #182848, #3a6186);
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+}
+
+/* SERA - PIOGGIA */
+.weather-evening-rainy {
+    background: linear-gradient(45deg, #0f2027, #203a43, #2c5364);
+    background-size: 400% 400%;
+    animation: gradientShift 12s ease infinite;
+}
+
+/* NOTTE - SERENO */
+.weather-night-clear {
+    background: linear-gradient(45deg, #0c2461, #1e3799, #0c2461);
+    background-size: 400% 400%;
+    animation: gradientShift 25s ease infinite;
+}
+
+/* NOTTE - NUVOLOSO */
+.weather-night-cloudy {
+    background: linear-gradient(45deg, #1a2980, #26d0ce, #1a2980);
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+}
+
+/* Animazione per il movimento del gradiente */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Effetti particellari aggiuntivi */
+.particles-sunny {
+    /* Particelle gialle/arancioni per il sole */
+}
+
+.particles-cloudy {
+    /* Particelle bianche/grigie per nuvole */
+}
+
+.particles-rainy {
+    /* Particelle blu/grigie per pioggia */
+}
