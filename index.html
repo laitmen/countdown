@@ -3,99 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown 2 Novembre - Santa Cristina Valgardena</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/weather-backgrounds.css">
-    <link rel="stylesheet" href="css/flip-animation.css">
+    <title>Countdown 2 Novembre 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            color: white;
+        }
+
+        /* Sfondo dinamico con gradiente animato */
+        .dynamic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        /* Particelle fluttuanti */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        /* Container principale */
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 90%;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .target-date {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Countdown */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-value {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        /* Animazioni */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            50% {
+                transform: translateY(-40px) translateX(-10px);
+            }
+            75% {
+                transform: translateY(-20px) translateX(10px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .countdown-value {
+                font-size: 2.5rem;
+                width: 80px;
+                height: 80px;
+            }
+            
+            .countdown-label {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .countdown {
+                gap: 1rem;
+            }
+            
+            .countdown-value {
+                font-size: 2rem;
+                width: 70px;
+                height: 70px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .target-date {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="dynamic-background"></div>
-    <div id="particles-js"></div>
-    
-    <!-- Menu controllo meteo -->
-    <div class="weather-controls">
-        <div class="weather-toggle" id="weatherToggle">
-            🌤️ Cambia Meteo
-        </div>
-        <div class="weather-dropdown" id="weatherDropdown">
-            <div class="weather-option" data-weather="clear">
-                <span class="weather-option-icon">☀️</span>
-                <span class="weather-option-name">Soleggiato</span>
-            </div>
-            <div class="weather-option" data-weather="partly_cloudy">
-                <span class="weather-option-icon">⛅</span>
-                <span class="weather-option-name">Parz. Nuvoloso</span>
-            </div>
-            <div class="weather-option" data-weather="cloudy">
-                <span class="weather-option-icon">☁️</span>
-                <span class="weather-option-name">Nuvoloso</span>
-            </div>
-            <div class="weather-option" data-weather="rain">
-                <span class="weather-option-icon">🌧️</span>
-                <span class="weather-option-name">Pioggia</span>
-            </div>
-            <div class="weather-option" data-weather="snow">
-                <span class="weather-option-icon">❄️</span>
-                <span class="weather-option-name">Neve</span>
-            </div>
-            <div class="weather-option" data-weather="thunderstorm">
-                <span class="weather-option-icon">⛈️</span>
-                <span class="weather-option-name">Temporale</span>
-            </div>
-            <div class="weather-option" data-weather="fog">
-                <span class="weather-option-icon">🌫️</span>
-                <span class="weather-option-name">Nebbia</span>
-            </div>
-            <div class="weather-option" data-weather="auto">
-                <span class="weather-option-icon">🔄</span>
-                <span class="weather-option-name">Automatico</span>
-            </div>
-        </div>
-    </div>
+    <div class="dynamic-bg"></div>
+    <div class="particles" id="particles"></div>
     
     <div class="container">
-        <h1>Countdown al 2 Novembre</h1>
-        <div class="target-date" id="targetDate">
-            <!-- Qui verrà inserito il meteo -->
-        </div>
+        <h1>Countdown al 2 Novembre 2025</h1>
+        <div class="target-date">2 Novembre 2025, 14:30</div>
         
         <div class="countdown">
             <div class="countdown-item">
-                <div class="countdown-number" id="days">
-                    <!-- Flip cards per giorni -->
-                </div>
+                <div class="countdown-value" id="days">00</div>
                 <div class="countdown-label">Giorni</div>
             </div>
             <div class="countdown-item">
-                <div class="countdown-number" id="hours">
-                    <!-- Flip cards per ore -->
-                </div>
+                <div class="countdown-value" id="hours">00</div>
                 <div class="countdown-label">Ore</div>
             </div>
             <div class="countdown-item">
-                <div class="countdown-number" id="minutes">
-                    <!-- Flip cards per minuti -->
-                </div>
+                <div class="countdown-value" id="minutes">00</div>
                 <div class="countdown-label">Minuti</div>
             </div>
             <div class="countdown-item">
-                <div class="countdown-number" id="seconds">
-                    <!-- Flip cards per secondi -->
-                </div>
+                <div class="countdown-value" id="seconds">00</div>
                 <div class="countdown-label">Secondi</div>
             </div>
         </div>
-        
-        <div class="message" id="message">
-            Il countdown è terminato!
-        </div>
     </div>
 
-    <!-- Particle.js library -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="js/particles.js"></script>
-    <script src="js/flip-counter.js"></script>
-    <script src="js/weather-simulator.js"></script>
-    <script src="js/script.js"></script>
+    <script>
+        // Data di destinazione: 2 novembre 2025 alle 14:30
+        const targetDate = new Date('November 2, 2025 14:30:00').getTime();
+        
+        // Aggiorna il countdown ogni secondo
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            
+            // Calcoli per giorni, ore, minuti e secondi
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Mostra i risultati
+            document.getElementById('days').innerHTML = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerHTML = seconds.toString().padStart(2, '0');
+            
+            // Se il countdown è finito
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.querySelector('.countdown').innerHTML = "<h2>È il momento!</h2>";
+            }
+        }, 1000);
+        
+        // Crea particelle dinamiche
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Dimensioni casuali
+                const size = Math.random() * 30 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Posizione iniziale casuale
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Animazione con ritardo casuale
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Cambia colore di sfondo ad ogni caricamento
+        function changeBackground() {
+            const colors = [
+                ['#1a2a6c', '#b21f1f', '#fdbb2d'], // Blu, Rosso, Giallo
+                ['#667eea', '#764ba2', '#f093fb'], // Viola, Rosa
+                ['#11998e', '#38ef7d', '#06beb6'], // Verde acqua
+                ['#ff9a9e', '#fecfef', '#fecfef'], // Rosa pastello
+                ['#a1c4fd', '#c2e9fb', '#a1c4fd'], // Azzurro
+                ['#ffecd2', '#fcb69f', '#ffecd2'], // Arancione chiaro
+                ['#ff8177', '#ff867a', '#ff8c7f']  // Rosso arancio
+            ];
+            
+            const randomColors = colors[Math.floor(Math.random() * colors.length)];
+            document.querySelector('.dynamic-bg').style.background = 
+                `linear-gradient(45deg, ${randomColors[0]}, ${randomColors[1]}, ${randomColors[2]})`;
+        }
+        
+        // Inizializza tutto al caricamento della pagina
+        window.onload = function() {
+            createParticles();
+            changeBackground();
+        };
+    </script>
 </body>
 </html>
