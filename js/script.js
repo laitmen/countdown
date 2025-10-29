@@ -1,5 +1,5 @@
 // Data di destinazione: 2 Novembre 2025 alle 22:00
-const targetDate = new Date(2025, 10, 2, 22, 0, 0); // Anno 2025, Mese 10 (Novembre), Giorno 2, Ore 22, Minuti 0, Secondi 0
+const targetDate = new Date(2025, 10, 2, 22, 0, 0);
 
 function updateCountdown() {
     const now = new Date();
@@ -28,8 +28,11 @@ function updateCountdown() {
     document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
 }
 
-// Aggiornamento iniziale
-updateCountdown();
-
-// Aggiornamento ogni secondo
-setInterval(updateCountdown, 1000);
+// Inizializzazione
+document.addEventListener('DOMContentLoaded', function() {
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    
+    // Avvia servizio meteo
+    weatherService.init();
+});
