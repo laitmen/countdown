@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Countdown Dinamico</title>
-
-  <!-- Foglio di stile -->
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown 2 Novembre</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="overlay">
-    <h1>Countdown verso Capodanno 🎉</h1>
-    <div id="countdown">Caricamento...</div>
-  </div>
+    <div class="container">
+        <h1>Countdown al 2 Novembre</h1>
+        <div class="target-date">2 Novembre 2024, 22:00</div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">00</div>
+                <div class="countdown-label">Giorni</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">00</div>
+                <div class="countdown-label">Ore</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">00</div>
+                <div class="countdown-label">Minuti</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">00</div>
+                <div class="countdown-label">Secondi</div>
+            </div>
+        </div>
+        
+        <div class="message" id="message">
+            Il countdown è terminato!
+        </div>
+    </div>
+    
+    <footer>
+        Countdown creato con HTML, CSS e JavaScript
+    </footer>
 
-  <!-- Script principale -->
-  <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
