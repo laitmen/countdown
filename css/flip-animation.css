@@ -1,0 +1,108 @@
+/* Flip card animation per countdown */
+.countdown-number {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    height: 100px;
+    align-items: center;
+}
+
+.digit-container {
+    display: inline-block;
+    width: 52px;
+    height: 86px;
+    perspective: 600px;
+}
+
+.digit-flip {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(.4, .2, .2, 1);
+    transform-origin: center top;
+}
+
+.digit-flip.flipping {
+    transform: rotateX(-90deg);
+}
+
+/* Top and bottom halves (visible digits) */
+.digit-top,
+.digit-bottom {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 2.6rem;
+    font-weight: 500;
+    backface-visibility: hidden;
+    color: white; /* importante: mostra il testo */
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+/* Top half (upper digit) */
+.digit-top {
+    top: 0;
+    align-items: flex-end;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+/* Bottom half (lower digit) */
+/* Non ruotiamo il testo di 180deg per evitare che risulti invertito */
+.digit-bottom {
+    bottom: 0;
+    align-items: flex-start;
+    padding-top: 6px;
+}
+
+/* overlay leggero per l'effetto lucido */
+.digit-top::before,
+.digit-bottom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border-radius: inherit;
+    z-index: 0;
+}
+
+/* garantiamo che il contenuto testuale sia sopra l'overlay */
+.digit-top > *, .digit-bottom > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Responsive per flip cards */
+@media (max-width: 768px) {
+    .digit-container {
+        width: 42px;
+        height: 72px;
+    }
+    
+    .digit-top,
+    .digit-bottom {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .digit-container {
+        width: 36px;
+        height: 60px;
+    }
+    
+    .digit-top,
+    .digit-bottom {
+        font-size: 1.7rem;
+    }
+}
